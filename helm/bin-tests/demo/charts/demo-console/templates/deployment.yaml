@@ -1,0 +1,40 @@
+---
+# Source: demo/charts/demo-console/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tests-console
+  namespace: dev
+  labels:
+    app: console
+  annotations:
+    note: "This is a console"
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: console
+  template:
+    metadata:
+      labels:
+        app: console
+    spec:
+      containers:
+      - name: tests-console-container
+        image: demo/console:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: APPLICATION_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: tests-configmap
+                key: application_port
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"

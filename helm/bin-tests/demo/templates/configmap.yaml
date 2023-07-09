@@ -1,0 +1,9 @@
+---
+# Source: demo/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tests-configmap
+  namespace: dev
+data:
+  application_port: "30000"

@@ -1,0 +1,36 @@
+---
+# Source: demo/charts/demo-webapp/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tests-webapp
+  namespace: dev
+  labels:
+    app: webapp
+  annotations:
+    note: "This is a webapp"
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: tests-webapp-container
+        image: demo/webapp:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"

@@ -1,0 +1,16 @@
+---
+# Source: demo/charts/demo-webapp/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: tests-webapp
+  namespace: dev
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30001

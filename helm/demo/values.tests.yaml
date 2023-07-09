@@ -1,0 +1,19 @@
+global:
+  namespace: tests
+  webapp:
+    name: webapp
+    replicas: 2
+    image: "demo/webapp:latest"
+    containerPort: 3000
+    nodePort: 30001
+    port: 80
+
+  console:
+    name: console
+    replicas: 3
+    image: "demo/console:latest"
+
+  cronjob:
+    name: cronjob
+    image: "demo/cronjob:latest"
+    schedule: "*/2 * * * *"

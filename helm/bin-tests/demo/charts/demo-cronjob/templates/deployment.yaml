@@ -1,0 +1,26 @@
+---
+# Source: demo/charts/demo-cronjob/templates/deployment.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name:  tests-cronjob
+  namespace: dev
+  labels:
+    app: cronjob
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: tests-cronjob-container
+            image: demo/cronjob:latest
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: APPLICATION_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: tests-configmap
+                  key: application_port
+          restartPolicy: OnFailure
