@@ -1,5 +1,5 @@
 const axios = require('axios')
-const port = 3000;
+const port = process.env.APPLICATION_PORT;
 const baseUrl = `http://kubernetes.docker.internal:${port}`
 
 setInterval(() => {
