@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-configmap
+  namespace: demo
+data:
+  application_port: "30000"

@@ -32,4 +32,7 @@ spec:
             cpu: "0.2"
         env:
           - name: APPLICATION_PORT
-            value: "30000"
+            valueFrom:
+              configMapKeyRef:
+                name: demo-configmap
+                key: application_port
