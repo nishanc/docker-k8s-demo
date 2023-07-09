@@ -1,32 +1,32 @@
-{{- $name := printf "%s-%s" .Release.Name .Values.webapp.name -}}
-{{- $containername := printf "%s-%s-container" .Release.Name .Values.webapp.name -}}
+{{- $name := printf "%s-%s" .Release.Name .Values.global.webapp.name -}}
+{{- $containername := printf "%s-%s-container" .Release.Name .Values.global.webapp.name -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $name }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.global.namespace }}
   labels:
-    app: {{ .Values.webapp.name }}
+    app: {{ .Values.global.webapp.name }}
   annotations:
     note: "This is a webapp"
 spec:
-  replicas: {{ .Values.webapp.replicas }}
+  replicas: {{ .Values.global.webapp.replicas }}
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ .Values.webapp.name }}
+      app: {{ .Values.global.webapp.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.webapp.name }}
+        app: {{ .Values.global.webapp.name }}
     spec:
       containers:
       - name: {{ $containername }}
-        image: {{ .Values.webapp.image }}
+        image: {{ .Values.global.webapp.image }}
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: {{ .Values.webapp.containerPort }}
+        - containerPort: {{ .Values.global.webapp.containerPort }}
         resources:
           limits:
             memory: 512Mi

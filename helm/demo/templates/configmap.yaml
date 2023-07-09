@@ -1,0 +1,8 @@
+{{- $name := printf "%s-configmap" .Release.Name -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Values.global.namespace }}
+data:
+  application_port: "30000"

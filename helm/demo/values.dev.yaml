@@ -1,8 +1,19 @@
-namespace: dev
-webapp:
-  name: webapp
-  replicas: 1
-  image: "demo/webapp:latest"
-  containerPort: 3000
-  nodePort: 30000
-  port: 80
+global:
+  namespace: dev
+  webapp:
+    name: webapp
+    replicas: 1
+    image: "demo/webapp:latest"
+    containerPort: 3000
+    nodePort: 30000
+    port: 80
+
+  console:
+    name: console
+    replicas: 1
+    image: "demo/console:latest"
+
+  cronjob:
+    name: cronjob
+    image: "demo/cronjob:latest"
+    schedule: "*/1 * * * *"

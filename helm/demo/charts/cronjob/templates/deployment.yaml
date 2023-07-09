@@ -1,0 +1,27 @@
+{{- $name := printf "%s-%s" .Release.Name .Values.global.cronjob.name -}}
+{{- $containername := printf "%s-%s-container" .Release.Name .Values.global.cronjob.name -}}
+{{- $configmapname := printf "%s-configmap" .Release.Name -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name:  {{ $name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.global.cronjob.name }}
+spec:
+  schedule: "{{ .Values.global.cronjob.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ $containername }}
+            image: {{ .Values.global.cronjob.image }}
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: APPLICATION_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $configmapname }}
+                  key: application_port
+          restartPolicy: OnFailure

@@ -1,0 +1,41 @@
+{{- $name := printf "%s-%s" .Release.Name .Values.global.console.name -}}
+{{- $containername := printf "%s-%s-container" .Release.Name .Values.global.console.name -}}
+{{- $configmapname := printf "%s-configmap" .Release.Name -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.global.console.name }}
+  annotations:
+    note: "This is a console"
+spec:
+  replicas: {{ .Values.global.console.replicas }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Values.global.console.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.console.name }}
+    spec:
+      containers:
+      - name: {{ $containername }}
+        image: {{ .Values.global.console.image }}
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: APPLICATION_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $configmapname }}
+                key: application_port
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
