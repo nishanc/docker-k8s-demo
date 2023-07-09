@@ -1,2 +1,21 @@
-
-
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-demo
+  namespace: demo
+  labels:
+    app: cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cronjob-container
+            image: demo/cronjob
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: APPLICATION_PORT
+              value: "30000"
+          restartPolicy: OnFailure
