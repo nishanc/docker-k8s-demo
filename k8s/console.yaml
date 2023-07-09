@@ -33,6 +33,6 @@ spec:
         env:
           - name: APPLICATION_PORT
             valueFrom:
-              configMapKeyRef:
-                name: demo-configmap
+              secretKeyRef:
+                name: demo-secret
                 key: application_port
