@@ -1,14 +1,16 @@
+{{- $name := printf "%s-%s" .Release.Name .Values.webapp.name -}}
+{{- $containername := printf "%s-%s-container" .Release.Name .Values.webapp.name -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp-service
-  namespace: demo
+  name: {{ $name }}
+  namespace: {{ .Values.namespace }}
 spec:
   type: NodePort
   selector:
-    app: webapp
+    app: {{ .Values.webapp.name }}
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 3000
-      nodePort: 30000
+      port: {{ .Values.webapp.port }}
+      targetPort: {{ .Values.webapp.containerPort }}
+      nodePort: {{ .Values.webapp.nodePort }}

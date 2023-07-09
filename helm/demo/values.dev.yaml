@@ -1,0 +1,8 @@
+namespace: dev
+webapp:
+  name: webapp
+  replicas: 1
+  image: "demo/webapp:latest"
+  containerPort: 3000
+  nodePort: 30000
+  port: 80
